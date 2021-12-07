@@ -61,8 +61,13 @@
         }
       },
       stage() {
+        debugger;
         return this.$refs.stage.getStage();
       },
+      // imgLayer() {
+      //
+      //   return this.$refs.imgLayer.getStage();
+      // },
     },
     mounted() {
       this.startListening();
@@ -141,20 +146,21 @@
       },
       generateGrid() {
         const tr = this.transformer;
-        const trX = tr.x();
-        const trY = tr.y();
-        const width = tr.width / this.grid.cols;
-        const height = tr.height / this.grid.rows;
+        const trX = tr.x() + 1;
+        const trY = tr.y() + 1;
+        const width = (tr.width() - 2) / this.grid.cols;
+        const height = (tr.height() - 2) / this.grid.rows;
 
         const blocks = [];
 
         for (let col = 0; col < this.grid.cols; col++) {
           for (let row = 0; row < this.grid.rows; row++) {
-            const x = trX + (width * col);
-            const y = trY + (height * row);
+            const x = Math.abs(trX + (width * col));
+            const y = Math.abs(trY + (height * row));
 
             const cfg = { x, y, width, height };
-            console.log("EXPORT:", JSON.stringify(cfg))
+            console.log("EXPORT:", JSON.stringify(cfg));
+            debugger;
             const block = this.stage.toDataURL(cfg);
             blocks.push(block);
           }
@@ -162,13 +168,14 @@
 
         console.log('blocks');
 
-        // blocks.forEach(() => {
-        //   //window.open(block);
-        //   // const img = document.createElement("img");
-        //   // img.src = block;
-        //   // const src = document.getElementById("header");
-        //   // src.appendChild(img);
-        // });
+        blocks.forEach(block => {
+          //window.open(block);
+          const img = document.createElement("img");
+          img.classList.add("grider");
+          img.src = block;
+          const src = document.getElementById("header");
+          src.appendChild(img);
+        });
       }
     },
   }

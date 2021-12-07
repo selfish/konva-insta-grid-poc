@@ -1,5 +1,5 @@
 <template>
-    <div id="header">{{ msg }}</div>
+    <div id="header" style="height: 400px; width: 330px;" class="flex flex-col flex-wrap"></div>
 </template>
 
 <script>
@@ -39,6 +39,10 @@
 </script>
 
 
-<style scoped lang="scss">
-
+<style lang="scss">
+    .grider {
+        margin: 5px;
+        height: 100px;
+        width: 100px;
+    }
 </style>
